@@ -14,6 +14,7 @@
     <?php
     session_start();
 
+    // Check user is already logged in.
     if (isset($_SESSION['name'])) {
         header("location:home.php");
     }
@@ -37,22 +38,27 @@
         return $data;
     }
 
+    // Check user has submitted.
     if (isset($_POST['submit'])) {
+        // Validate the name.
         if (empty($_POST["name"])) {
             $nameErr = " (required)";
         } else {
             $name = testInput($_POST["name"]);
         }
+        // Validate the email.
         if (empty($_POST["email"])) {
             $emailErr = " (required)";
         } else {
             $email = testInput($_POST["email"]);
         }
+        // Validate the password.
         if (empty($_POST["password"])) {
             $pwdErr = " (required)";
         } else {
             $password = testInput($_POST["password"]);
         }
+        // Check all required fields to login the user.
         if ($name && $email && $password) {
             $_SESSION['name'] = $name;
             $_SESSION['email'] = $email;

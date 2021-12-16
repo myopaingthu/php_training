@@ -8,9 +8,10 @@
     <title>Top | Tutorial 3</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="./css/style.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="css/library/jquery-ui.min.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/library/jquery-ui.theme.min.css?v=<?php echo time(); ?>">
+    <script src="js/library/jquery.js"></script>
+    <script src="js/library/jquery-ui.min.js"></script>
     <script src="js/common.js"></script>
 </head>
 
@@ -23,10 +24,12 @@
     </form>
 
     <?php
+    // Check user has submitted or not.
     if (isset($_POST['submit'])) {
         $birthdate = $_POST['birthdate'];
         $formattedDate = new DateTime($birthdate);
         $today = new DateTime();
+        // Check birthday is not exceeded today.
         if ($formattedDate > $today) {
             echo '<br>';
             echo '<br>';
@@ -42,6 +45,7 @@
         echo ' Months, ';
         echo $age->d;
         echo ' Days';
+        echo '<br>';
     }
     ?>
 </body>
