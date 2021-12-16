@@ -1,0 +1,38 @@
+body {
+  text-align: center;
+}
+
+h1 {
+  margin: 20px 0;
+  font-size: 40px;
+  text-align: center;
+}
+
+form {
+  width: 25%;
+  margin: 0 auto;
+}
+
+input {
+  display: inline-block;
+  width: 50%;
+  margin: 8px 0;
+  padding: 12px 20px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+input[type=submit] {
+  width: 100%;
+  border: 2px solid crimson;
+  background-color: transparent;
+  color: black;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+input[type=submit]:hover {
+  background-color: crimson;
+  color: white;
+}
