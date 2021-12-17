@@ -68,11 +68,14 @@ require 'vendor/autoload.php';
         error_reporting(E_ALL ^ E_DEPRECATED);
         $dir = str_replace('\\', '/', __DIR__) . '/';
         $source = $dir . 'sample.doc';
+        // Load the doc file to read.
         $phpWord = \PhpOffice\PhpWord\IOFactory::load($source);
         foreach ($phpWord->getSections() as $section) {
             foreach ($section->getElements() as $element) {
+                // Check whether $element is a \PhpOffice\PhpWord\Element\TextRun instance.
                 if ($element instanceof \PhpOffice\PhpWord\Element\TextRun) {
                     foreach ($element->getElements() as $e) {
+                        // Check $e is text or image.
                         if ($e instanceof \PhpOffice\PhpWord\Element\Text) {
                             $style = $e->getFontStyle();
                             $size = $style->getSize();
