@@ -82,7 +82,7 @@ if (isset($_POST['submit'])) {
     <title>Top | Tutorial 6</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="./css/style.css?v=<?php echo time(); ?>">
-    <script src="js/library/jquery.js"></script>
+    <script src="js/library/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
