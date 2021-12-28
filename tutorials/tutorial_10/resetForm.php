@@ -1,6 +1,7 @@
 <?php
 
 use PHPMailer\PHPMailer\PHPMailer;
+
 session_start();
 
 // Check user is already logged in.
@@ -45,12 +46,18 @@ if (isset($_POST['submit'])) {
             // Check user exists with query email.
             if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 // Creat reset token.
-                $token = md5($email).rand(10,9999);
+                $token = md5($email) . rand(10, 9999);
                 // Date format
-                $expFormat = mktime(date("H"), date("i"), date("s"), 
-                    date("m") ,date("d")+1, date("Y"));
+                $expFormat = mktime(
+                    date("H"),
+                    date("i"),
+                    date("s"),
+                    date("m"),
+                    date("d") + 1,
+                    date("Y")
+                );
                 // Exp date for token.
-                $expDate = date("Y-m-d H:i:s",$expFormat);
+                $expDate = date("Y-m-d H:i:s", $expFormat);
                 // Check token and expdate.
                 if (isset($token) && isset($expDate)) {
                     try {
@@ -76,21 +83,21 @@ if (isset($_POST['submit'])) {
                             // Set smtp host
                             $mail->IsSMTP();
                             // enable SMTP authentication
-                            $mail->SMTPAuth = true;                  
+                            $mail->SMTPAuth = true;
                             // set gmail address for authentication
                             $mail->Username = "your_gmail@gmail.com";
                             // set gmail password for authentication
                             $mail->Password = "your_password";
-                            $mail->SMTPSecure = "ssl";  
+                            $mail->SMTPSecure = "ssl";
                             // sets GMAIL as the SMTP server
                             $mail->Host = "smtp.gmail.com";
                             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                             // set the SMTP port for the GMAIL server
                             $mail->Port = 587;
                             // from gmail address
-                            $mail->From='your_gmail@gmail.com';
+                            $mail->From = 'your_gmail@gmail.com';
                             // from name
-                            $mail->FromName='Tutorial 10';
+                            $mail->FromName = 'Tutorial 10';
                             // to gmail address and name
                             $mail->AddAddress($email, $row['name']);
                             // mail subject
@@ -100,10 +107,10 @@ if (isset($_POST['submit'])) {
                             // Mail body
                             $mail->Body    = $link;
                             // Check mail is sent successfully or failed.
-                            if($mail->Send()) {
-                            echo "<div class='alert alert-success'>Email is sent. Pleas check your inbox.</div>";
+                            if ($mail->Send()) {
+                                echo "<div class='alert alert-success'>Email is sent. Pleas check your inbox.</div>";
                             } else {
-                            echo "Mail Error - >".$mail->ErrorInfo;
+                                echo "Mail Error - >" . $mail->ErrorInfo;
                             }
                         }
                     }

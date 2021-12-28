@@ -7,7 +7,7 @@ if (isset($_SESSION['loggedin'])) {
     header("location:index.php");
 }
 
-if(isset($_GET['key']) && isset($_GET['token'])) {
+if (isset($_GET['key']) && isset($_GET['token'])) {
     $token = $_GET['token'];
     $email = $_GET['key'];
     // Include database connection
@@ -81,13 +81,13 @@ if (isset($_POST['submit'])) {
                 WHERE email = :email";
             // Prepare query for execution
             $stmt = $con->prepare($query);
-             // Bind the parameters
+            // Bind the parameters
             $stmt->bindParam(':password', $hashedPwd);
             $stmt->bindParam(':reset_link_token', $null);
             $stmt->bindParam(':exp_date', $null);
             $stmt->bindParam(':email', $email);
             // Execute the query
-            
+
             // Check user exist with query email.
             if ($stmt->execute()) {
                 session_start();
@@ -131,8 +131,8 @@ if (isset($_POST['submit'])) {
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <?php
             if (isset($email) && isset($token)) { ?>
-            <input type="hidden" name="email" value="<?php echo $email ?>">
-            <input type="hidden" name="token" value="<?php echo $token ?>">
+                <input type="hidden" name="email" value="<?php echo $email ?>">
+                <input type="hidden" name="token" value="<?php echo $token ?>">
             <?php } ?>
             <div class="form-group">
                 <label for="password">Password</label>
