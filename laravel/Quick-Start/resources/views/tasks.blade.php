@@ -13,7 +13,7 @@
     <div class="card mb-5">
       <div class="card-header">Update Task</div>
       <div class="col-md-8 mx-auto my-2">
-        <form action="{{ route('task#update', [$task->id]) }}" method="POST">
+        <form action="{{ route('tasks.update', [$task->id]) }}" method="POST">
           {{ csrf_field() }}
           @method('PATCH')
 
@@ -35,7 +35,7 @@
     <div class="card mb-5">
       <div class="card-header">New Task</div>
       <div class="col-md-8 mx-auto my-2">
-        <form action="/task" method="POST">
+        <form action="{{ route('tasks.store') }}" method="POST">
           {{ csrf_field() }}
 
           <!-- Task Name -->
@@ -79,11 +79,11 @@
 
               <!-- Delete Button -->
               <td>
-                <form action="/task/{{ $task->id }}" method="POST">
+                <form action="{{ route('tasks.destroy', [$task->id]) }}" method="POST">
                   {{ csrf_field() }}
                   {{ method_field('DELETE') }}
 
-                  <a href="{{ route('task#edit', [$task->id]) }}" class="btn btn-warning btn-sm">Edit Task</a>
+                  <a href="{{ route('tasks.edit', [$task->id]) }}" class="btn btn-warning btn-sm">Edit Task</a>
                   <button class="btn btn-danger btn-sm">Delete Task</button>
                 </form>
               </td>

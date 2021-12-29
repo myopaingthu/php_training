@@ -1,9 +1,8 @@
 <?php
 
-use App\Models\Task;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Task\TaskController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Validator;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,90 +15,9 @@ use Illuminate\Support\Facades\Validator;
 |
 */
 
-/**
- * Display All Tasks
- * 
- * @return \Illuminate\Http\Response
- */
+// Redirect to task list
 Route::get('/', function () {
-    $tasks = Task::orderBy('created_at', 'asc')->get();
-
-    return view('tasks', [
-        'tasks' => $tasks
-    ]);
+    return redirect()->route('tasks.index');
 });
-
-/**
- * Add A New Task
- * 
- * @param  \Illuminate\Http\Request  $request
- * @return \Illuminate\Http\Response
- */
-Route::post('/task', function (Request $request) {
-    $validator = Validator::make($request->all(), [
-        'name' => 'required|max:255',
-    ]);
-
-    if ($validator->fails()) {
-        return redirect('/')
-            ->withInput()
-            ->withErrors($validator);
-    }
-
-    $task = new Task;
-    $task->name = $request->name;
-    $task->save();
-
-    return redirect('/')->with('success', 'Task created successfully.');
-});
-
-/**
- * Display One Task
- * 
- * @param  \App\Models\Task  $task
- * @return \Illuminate\Http\Response
- */
-Route::get('/task/{task}', function (Task $task) {
-    $tasks = Task::orderBy('created_at', 'asc')->get();
-
-    return view('tasks', [
-        'task' => $task,
-        'tasks' => $tasks
-    ]);
-})->name('task#edit');
-
-/**
- * Edit A Task
- * 
- * @param  \Illuminate\Http\Request  $request
- * @param  \App\Models\Task  $task
- * @return \Illuminate\Http\Response
- */
-Route::patch('/task/{task}', function (Request $request, Task $task) {
-    $validator = Validator::make($request->all(), [
-        'name' => 'required|max:255',
-    ]);
-
-    if ($validator->fails()) {
-        return redirect('/')
-            ->withInput()
-            ->withErrors($validator);
-    }
-
-    $task->name =  $request->name;
-    $task->save();
-
-    return redirect('/')->with('success', 'Task updated successfully.');
-})->name('task#update');
-
-/**
- * Delete An Existing Task
- * 
- * @param  $id
- * @return \Illuminate\Http\Response
- */
-Route::delete('/task/{id}', function ($id) {
-    Task::findOrFail($id)->delete();
-
-    return redirect('/');
-});
+// Task list resource route
+Route::resource('tasks', TaskController::class);
