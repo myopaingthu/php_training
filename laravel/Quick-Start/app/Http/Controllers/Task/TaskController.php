@@ -40,16 +40,6 @@ class TaskController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -61,6 +51,7 @@ class TaskController extends Controller
             'name' => 'required|max:255',
         ]);
 
+        // Check validation passed or not.
         if ($validator->fails()) {
             return redirect()
                 ->route('tasks.index')
@@ -70,22 +61,12 @@ class TaskController extends Controller
 
         $task = $this->taskInterface->saveTask($request);
 
+        // Check task is created successfully or not
         if ($task) {
             return redirect()
                 ->route('tasks.index')
                 ->with('success', 'Task created successfully.');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Task $task)
-    {
-        //
     }
 
     /**
@@ -117,6 +98,7 @@ class TaskController extends Controller
             'name' => 'required|max:255',
         ]);
 
+        // Check validation passed or not.
         if ($validator->fails()) {
             return redirect()
                 ->route('tasks.edit', [$task->id])
@@ -126,6 +108,7 @@ class TaskController extends Controller
 
         $task = $this->taskInterface->updateTask($request, $task);
 
+        // Check task is updated successfully.
         if ($task) {
             return redirect()
                 ->route('tasks.index')
@@ -143,6 +126,7 @@ class TaskController extends Controller
     {
         $result = $this->taskInterface->deleteTask($task);
 
+        // Check task is deleted successfully.
         if ($result) {
             return redirect()
                 ->route('tasks.index')

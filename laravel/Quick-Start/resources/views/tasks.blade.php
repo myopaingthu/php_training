@@ -5,8 +5,6 @@
 <!-- Bootstrap Boilerplate... -->
 
 <div class="container">
-  <!-- Display Validation Errors -->
-  @include('common.errors')
 
   @if (isset($task))
     <!-- Update Task Form -->
