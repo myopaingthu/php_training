@@ -1,28 +1,21 @@
 <?php
 
-namespace App\Contracts\Dao\Auth;
+namespace App\Contracts\Services\Auth;
 
-use App\Http\Requests\UserRegisterRequest;
+use Illuminate\Http\Request;
 
 /**
- * Interface of Data Access Object for Authentication
+ * Interface for passwrod reset service.
  */
-interface AuthDaoInterface
+interface ForgetPasswordInterface
 {
     /**
-     * To Save User with values from request
+     * To store forget password data and send email
+     * 
      * @param Request $request request including inputs
-     * @return Object created user object
+     * @return
      */
-    public function saveUser(UserRegisterRequest $request);
-
-    /**
-     * To Save token and email for password reset table
-     * @param string email
-     * @param string token
-     * @return bool
-     */
-    public function saveToken($email, $token);
+    public function processForgetPasswordForm(Request $request);
 
     /**
      * To get current reset password data of user
@@ -43,7 +36,7 @@ interface AuthDaoInterface
     public function resetPassword($email, $password);
 
     /**
-     * To delte row of password reset table 
+     * To deelte row of password reset table 
      * 
      * @param string $email
      * @return bool

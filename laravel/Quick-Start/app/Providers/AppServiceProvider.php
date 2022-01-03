@@ -19,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
 
         // Business logic registration
         $this->app->bind('App\Contracts\Services\Auth\AuthServiceInterface', 'App\Services\Auth\AuthService');
+        $this->app->bind('App\Contracts\Services\Auth\ForgetPasswordInterface', 'App\Services\Auth\ForgetPasswordService');
         $this->app->bind('App\Contracts\Services\Task\TaskServiceInterface', 'App\Services\Task\TaskService');
     }
 
