@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Student;
 
 use App\Contracts\Services\Student\StudentServiceInterface;
+use App\Exports\StudentsExport;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StudentController extends Controller
 {
@@ -110,5 +112,44 @@ class StudentController extends Controller
     {
         $this->studentInterface->deleteStudent($student);
         return response('success', 204);
+    }
+
+    /**
+     * To download student csv file
+     * @return File Download CSV file
+     */
+    public function downloadStudentCSV()
+    {
+        return Excel::download(new StudentsExport, 'students.xlsx');
+    }
+
+    /**
+     * Show the form for uploading csv.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showStudentUploadView()
+    {
+        return view('student.upload');
+    }
+
+    /**
+     * Import from an excel file
+     * 
+     * @param \Illuminate\Http\Request $request 
+     * @return \Illuminate\Http\Response
+     */
+    public function submitStudentUpload(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx',
+        ]);
+
+        // Check imported successfully or not
+        if ($this->studentInterface->uploadStudentCSV()) {
+            return redirect()
+                ->route('students.index')
+                ->with('success', 'Imported successfully.');
+        }
     }
 }

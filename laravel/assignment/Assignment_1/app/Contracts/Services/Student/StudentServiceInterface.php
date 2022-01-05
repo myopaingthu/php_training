@@ -43,4 +43,10 @@ interface StudentServiceInterface
      * @return Object $post saved student
      */
     public function deleteStudent(Student $student);
+
+    /**
+     * To upload student csv file
+     * @return File Upload CSV file
+     */
+    public function uploadStudentCSV();
 }
