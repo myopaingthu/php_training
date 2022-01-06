@@ -8,6 +8,32 @@
   <div class="card">
     <div class="card-header">
       Current Students
+      <form class="row row-cols-lg-auto g-3 align-items-center search-form ms-1" action="{{ route('students.index') }}" method="GET">
+        <div class="col-12">
+          <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
+          <div class="input-group">
+            <div class="input-group-text">@</div>
+            <input type="text" class="form-control" name="name" id="inlineFormInputGroupUsername" placeholder="Username">
+          </div>
+        </div>
+        <div class="col-12">
+          <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
+          <div class="input-group">
+            <div class="input-group-text">S</div>
+            <input type="date" class="form-control" name="start" id="inlineFormInputGroupUsername">
+          </div>
+        </div>
+        <div class="col-12">
+          <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
+          <div class="input-group">
+            <div class="input-group-text">E</div>
+            <input type="date" class="form-control" name="end" id="inlineFormInputGroupUsername">
+          </div>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </form>
       <a href="{{ route('students.upload') }}" class="btn btn-success float-end">Import</a>
       <a href="{{ route('downloadStudentCSV') }}" class="btn btn-primary float-end me-1">Export</a>
     </div>
@@ -21,6 +47,7 @@
           <th>Phone</th>
           <th>Address</th>
           <th>Date of Birth</th>
+          <th>Created at</th>
           <th>Operation</th>
         </thead>
         <tbody>
@@ -28,10 +55,11 @@
           <tr>
             <td>{{ $student->name }}</td>
             <td>{{ $student->email }}</td>
-            <td>{{ $student->major->name }}</td>
+            <td>{{ $student->major }}</td>
             <td>{{ $student->phone }}</td>
             <td>{{ $student->address }}</td>
             <td>{{ $student->dob }}</td>
+            <td>{{ \Carbon\Carbon::parse($student->created_at)->format('Y-m-d')}}</td>
             <td>
               <a href="{{ route('students.edit', [$student->id]) }}" class="btn btn-warning btn-sm">Edit</a>
               <button class="btn btn-danger btn-sm delete" data-id="{{ $student->id }}">Delete</button>

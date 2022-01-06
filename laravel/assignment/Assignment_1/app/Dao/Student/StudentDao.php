@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\Major;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Data Access Object for Student
@@ -16,11 +17,28 @@ class StudentDao implements StudentDaoInterface
 {
     /**
      * To get student lists
+     * @param Request $request request with inputs
      * @return $array of students
      */
-    public function getStudents()
+    public function getStudents(Request $request)
     {
-        return Student::with('major')->orderBy('created_at', 'asc')->get();
+        $name = $request->name;
+        $start = $request->start;
+        $end = $request->end;
+
+        $students = DB::table('students as student')
+            ->join('majors as major', 'student.major_id', '=', 'major.id')
+            ->select('student.*', 'major.name as major');
+        if ($name) {
+            $students->where('student.name', 'LIKE', '%' . $name . '%');
+        }
+        if ($start) {
+            $students->whereDate('student.created_at', '>=', $start);
+        }
+        if ($end) {
+            $students->whereDate('student.created_at', '<=', $end);
+        }
+        return $students->get();
     }
 
     /**

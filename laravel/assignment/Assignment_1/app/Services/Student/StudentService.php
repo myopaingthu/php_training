@@ -28,11 +28,12 @@ class StudentService implements StudentServiceInterface
 
     /**
      * To get student lists
+     * @param Request $request request with inputs
      * @return $array of students
      */
-    public function getStudents()
+    public function getStudents(Request $request)
     {
-        return $this->studentDao->getStudents();
+        return $this->studentDao->getStudents($request);
     }
 
     /**

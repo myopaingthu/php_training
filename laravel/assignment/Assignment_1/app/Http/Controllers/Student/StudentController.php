@@ -31,11 +31,12 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $students = $this->studentInterface->getStudents();
+        $students = $this->studentInterface->getStudents($request);
 
         return view('student.index', compact('students'));
     }

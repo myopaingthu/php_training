@@ -12,9 +12,10 @@ interface StudentDaoInterface
 {
     /**
      * To get student lists
+     * @param Request $request request with inputs
      * @return $array of students
      */
-    public function getStudents();
+    public function getStudents(Request $request);
 
     /**
      * To get major lists
