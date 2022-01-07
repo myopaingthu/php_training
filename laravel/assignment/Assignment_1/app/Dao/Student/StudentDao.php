@@ -42,6 +42,15 @@ class StudentDao implements StudentDaoInterface
     }
 
     /**
+     * To get student lists
+     * @return $array of students
+     */
+    public function getStudentsAPI()
+    {
+        return Student::with('major')->latest()->get();
+    }
+
+    /**
      * To get major lists
      * @return $array of majors
      */

@@ -34,7 +34,7 @@
           <button type="submit" class="btn btn-primary">Search</button>
         </div>
       </form>
-      <a href="{{ route('students.upload') }}" class="btn btn-success float-end">Import</a>
+      <a href="{{ route('students.uploadView') }}" class="btn btn-success float-end">Import</a>
       <a href="{{ route('downloadStudentCSV') }}" class="btn btn-primary float-end me-1">Export</a>
     </div>
 

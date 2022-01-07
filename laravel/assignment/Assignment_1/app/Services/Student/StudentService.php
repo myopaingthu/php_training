@@ -37,6 +37,15 @@ class StudentService implements StudentServiceInterface
     }
 
     /**
+     * To get student lists
+     * @return $array of students
+     */
+    public function getStudentsAPI()
+    {
+        return $this->studentDao->getStudentsAPI();
+    }
+
+    /**
      * To get major lists
      * @return $array of majors
      */
@@ -73,7 +82,7 @@ class StudentService implements StudentServiceInterface
      */
     public function deleteStudent(Student $student)
     {
-        $this->studentDao->deleteStudent($student);
+        return $this->studentDao->deleteStudent($student);
     }
 
     /**

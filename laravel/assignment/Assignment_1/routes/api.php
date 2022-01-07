@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Student\StudentAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// major list api route
+Route::get('apistudents/majors', [StudentAPIController::class, 'getMajors'])->name('api#getMajors');
+// student api resource route
+Route::apiResource('apistudents', StudentAPIController::class);

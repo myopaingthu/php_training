@@ -18,6 +18,12 @@ interface StudentServiceInterface
     public function getStudents(Request $request);
 
     /**
+     * To get student lists
+     * @return $array of students
+     */
+    public function getStudentsAPI();
+
+    /**
      * To get major lists
      * @return $array of majors
      */

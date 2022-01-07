@@ -111,8 +111,13 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        $this->studentInterface->deleteStudent($student);
-        return response('success', 204);
+        $result = $this->studentInterface->deleteStudent($student);
+        // Check student is deleted successfully or not
+        if ($result) {
+            return success('Student deleted successfully', null);
+        } else {
+            return fail('Something went wrong. Please try again!', null);
+        }
     }
 
     /**

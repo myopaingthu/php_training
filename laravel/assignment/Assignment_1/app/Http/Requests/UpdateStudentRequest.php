@@ -26,7 +26,7 @@ class UpdateStudentRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|email|unique:students,email,' . $this->student->id,
+            'email' => 'required|email|unique:students,email,' . $this->apistudent->id,
             'major' => 'required',
             'phone' => [
                 'required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10', 'max:15', 'ends_with:0,1,2,3,4,5,6,7,8,9',
