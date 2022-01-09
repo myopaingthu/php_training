@@ -30,6 +30,7 @@ $(function () {
     });
     $(document).on('click', '.del-btn', function () {
         var id = $(this).data('id');
+        var node = $(this).parent().parent();
         Swal.fire({
             title: 'Are you sure want to delete?',
             text: "You won't be able to revert this!",
@@ -60,9 +61,7 @@ $(function () {
                                 icon: 'success',
                                 title: data.message
                             });
-                            setTimeout(function () {
-                                document.location.reload();
-                            }, 3000);
+                            node.hide();
                         }
                     }
                 });
