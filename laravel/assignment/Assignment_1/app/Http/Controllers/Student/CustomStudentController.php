@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers\Student;
 
-use App\Contracts\Services\Student\StudentServiceInterface;
-use App\Exports\StudentsExport;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStudentRequest;
-use App\Http\Requests\StudentMailRequest;
-use App\Http\Requests\StudentUploadRequest;
 use App\Http\Requests\UpdateStudentRequest;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Contracts\Services\Student\StudentServiceInterface;
 
-class StudentController extends Controller
+class CustomStudentController extends Controller
 {
     /**
      * task interface
@@ -33,14 +29,13 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function showList(Request $request)
     {
         $students = $this->studentInterface->getStudents($request);
 
-        return view('student.index')
+        return view('custom_student.index')
             ->with(['students' => $students]);
     }
 
@@ -49,11 +44,11 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function showCreateView()
     {
         $majors = $this->studentInterface->getMajors();
 
-        return view('student.create')
+        return view('custom_student.create')
             ->with(['majors' => $majors]);
     }
 
@@ -63,14 +58,14 @@ class StudentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreStudentRequest $request)
+    public function saveStudent(StoreStudentRequest $request)
     {
         $student = $this->studentInterface->saveStudent($request);
 
         // Check student is created successfully or not
         if ($student) {
             return redirect()
-                ->route('students.index')
+                ->route('students#showList')
                 ->with('success', 'Student created successfully.');
         }
     }
@@ -81,11 +76,11 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function edit(Student $student)
+    public function showEditView(Student $student)
     {
         $majors = $this->studentInterface->getMajors();
 
-        return view('student.edit')
+        return view('custom_student.edit')
             ->with([
                 'majors' => $majors,
                 'student' => $student
@@ -99,14 +94,14 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateStudentRequest $request, Student $student)
+    public function updateStudent(UpdateStudentRequest $request, Student $student)
     {
         $result = $this->studentInterface->updateStudent($request, $student);
 
         // Check student is created successfully or not
         if ($result) {
             return redirect()
-                ->route('students.index')
+                ->route('students#showList')
                 ->with('success', 'Student updated successfully.');
         }
     }
@@ -117,7 +112,7 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Student $student)
+    public function deleteStudent(Student $student)
     {
         $result = $this->studentInterface->deleteStudent($student);
         // Check student is deleted successfully or not
@@ -125,67 +120,6 @@ class StudentController extends Controller
             return success('Student deleted successfully', null);
         } else {
             return fail('Something went wrong. Please try again!', null);
-        }
-    }
-
-    /**
-     * To download student csv file
-     * @return File Download CSV file
-     */
-    public function downloadStudentCSV()
-    {
-        return Excel::download(new StudentsExport, 'students.xlsx');
-    }
-
-    /**
-     * Show the form for uploading csv.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showStudentUploadView()
-    {
-        return view('student.upload');
-    }
-
-    /**
-     * Import from an excel file
-     * 
-     * @param \Illuminate\Http\Request $request 
-     * @return \Illuminate\Http\Response
-     */
-    public function submitStudentUpload(StudentUploadRequest $request)
-    {
-        // Check imported successfully or not
-        if ($this->studentInterface->uploadStudentCSV()) {
-            return redirect()
-                ->route('students.index')
-                ->with('success', 'Imported successfully.');
-        }
-    }
-
-    /**
-     * Show the form for email to send.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showEailForm()
-    {
-        return view('student.emilForm');
-    }
-
-    /**
-     * Send email
-     * 
-     * @param \Illuminate\Http\Request $request 
-     * @return \Illuminate\Http\Response
-     */
-    public function postEailFormSubmit(StudentMailRequest $request)
-    {
-        // Check email is sent successfully or not
-        if ($this->studentInterface->sendEmail($request)) {
-            return redirect()
-                ->route('students.index')
-                ->with('success', 'Email is sent successfully.');
         }
     }
 }

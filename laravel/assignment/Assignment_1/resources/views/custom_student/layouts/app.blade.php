@@ -36,19 +36,14 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="{{ route('students#showList') }}">
-                {{ __('Custom Route List') }}
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link {{ request()->routeIs('showEailForm') ? 'active' : '' }}" aria-current="page" 
-                href="{{ route('showEailForm') }}">
-                {{ __('Send Email') }}
+              <a class="nav-link" aria-current="page" 
+                href="{{ route('students.index') }}">
+                {{ __('WEB Student List') }}
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link {{ request()->routeIs('students.create') ? 'active' : '' }}" aria-current="page" 
-                href="{{ route('students.create') }}">
+                href="{{ route('students#showCreateView') }}">
                 {{ __('Create Student') }}
               </a>
             </li>

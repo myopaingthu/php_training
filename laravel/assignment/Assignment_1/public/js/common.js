@@ -1,3 +1,14 @@
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
 $(function () {
     let token = document.head.querySelector('meta[name="csrf-token"]');
     if (token) {
@@ -9,6 +20,7 @@ $(function () {
     }
     $('div.alert').delay(3000).slideUp(300);
     $('.delete').on('click', function () {
+        var node = $(this).parent().parent();
         if (confirm('Are you sure want to delete?')) {
             var id = $(this).data('id');
             $.ajax({
@@ -16,12 +28,30 @@ $(function () {
                 method: 'DELETE',
                 success: function (data) {
                     if (data.result) {
-                        $('.container:first-child').append(
-                            "<div class='alert alert-success'>Student deleted successfully.</div>"
-                        );
-                        setTimeout(function () {
-                            document.location.reload();
-                        }, 3000);
+                        Toast.fire({
+                            icon: 'success',
+                            title: data.message
+                        });
+                        node.hide();
+                    }
+                }
+            });
+        }
+    });
+    $('.custom-delete').on('click', function () {
+        var node = $(this).parent().parent();
+        if (confirm('Are you sure want to delete?')) {
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/students/deletestudent/' + id,
+                method: 'DELETE',
+                success: function (data) {
+                    if (data.result) {
+                        Toast.fire({
+                            icon: 'success',
+                            title: data.message
+                        });
+                        node.hide();
                     }
                 }
             });

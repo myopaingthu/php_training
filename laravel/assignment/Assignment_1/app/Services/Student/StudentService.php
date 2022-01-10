@@ -8,6 +8,7 @@ use App\Mail\StudentList;
 use App\Mail\StudentRegistered;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Mail;
 
 /**
@@ -70,10 +71,12 @@ class StudentService implements StudentServiceInterface
             Mail::to($student->email)->send(new StudentRegistered);
             // Check mail sending process has error.
             if (count(Mail::failures()) > 0) {
-                dd(Mail::failures());
+                Log::error('Mail Sending Error', Mail::failures());
             } else {
                 return $student;
             }
+        } else {
+            return false;
         }
     }
 
@@ -120,10 +123,12 @@ class StudentService implements StudentServiceInterface
             Mail::to($request->email)->send(new StudentList($students));
             // Check mail sending process has error.
             if (count(Mail::failures()) > 0) {
-                dd(Mail::failures());
+                Log::error('Mail Sending Error', Mail::failures());
             } else {
                 return true;
             }
+        } else {
+            return false;
         }
     }
 }

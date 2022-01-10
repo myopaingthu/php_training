@@ -66,14 +66,18 @@ class StudentDao implements StudentDaoInterface
      */
     public function saveStudent(Request $request)
     {
-        return Student::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'dob' => $request->dob,
-            'major_id' => $request->major
-        ]);
+        $student = DB::transaction(function () use ($request) {
+            return Student::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'dob' => $request->dob,
+                'major_id' => $request->major
+            ]);
+        }, 5);
+
+        return $student;
     }
 
     /**
@@ -84,14 +88,18 @@ class StudentDao implements StudentDaoInterface
      */
     public function updateStudent(Request $request, Student $student)
     {
-        return $student->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'dob' => $request->dob,
-            'major_id' => $request->major
-        ]);
+        $student = DB::transaction(function () use ($request, $student) {
+            return $student->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'dob' => $request->dob,
+                'major_id' => $request->major
+            ]);
+        }, 5);
+
+        return $student;
     }
 
     /**
@@ -101,7 +109,11 @@ class StudentDao implements StudentDaoInterface
      */
     public function deleteStudent(Student $student)
     {
-        return $student->delete();
+        $student = DB::transaction(function () use ($student) {
+            return $student->delete();
+        }, 5);
+        
+        return $student;
     }
 
     /**

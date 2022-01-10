@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Student;
+use App\Http\Controllers\Student\CustomStudentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Student\StudentAPIController;
@@ -32,8 +32,22 @@ Route::post('/mail', [StudentController::class, 'postEailFormSubmit'])->name('po
 // API view routes
 Route::prefix('api')->group(function () {
     Route::get('students/show', [StudentAPIController::class, 'showListView'])->name('api#showListView');
-    Route::get('students/showCreateView', [StudentAPIController::class, 'showCreateView'])
+    Route::get('students/showcreateview', [StudentAPIController::class, 'showCreateView'])
         ->name('api#showCreateView');
-    Route::get('students/showEditView/{id}', [StudentAPIController::class, 'showEditView'])
+    Route::get('students/showeditview/{id}', [StudentAPIController::class, 'showEditView'])
         ->name('api#showEditView');
+});
+
+// Custom routes for students
+Route::prefix('students')->group(function () {
+    Route::get('showlist', [CustomStudentController::class, 'showList'])->name('students#showList');
+    Route::get('showcreateview', [CustomStudentController::class, 'showCreateView'])
+        ->name('students#showCreateView');
+    Route::post('savestudent', [CustomStudentController::class, 'saveStudent'])->name('students#saveStudent');
+    Route::get('showeditview/{student}', [CustomStudentController::class, 'showEditView'])
+        ->name('students#showEditView');
+    Route::patch('updatestudent/{student}', [CustomStudentController::class, 'updateStudent'])
+        ->name('students#updateStudent');
+    Route::delete('deletestudent/{student}', [CustomStudentController::class, 'deleteStudent'])
+        ->name('students#deleteStudent');
 });

@@ -24,9 +24,11 @@ class UpdateStudentRequest extends FormRequest
      */
     public function rules()
     {
+        // Check route model binding key
+        $id = $this->apistudent ? $this->apistudent->id : $this->student->id;
         return [
             'name' => 'required',
-            'email' => 'required|email|unique:students,email,' . $this->apistudent->id,
+            'email' => 'required|email|unique:students,email,' . $id,
             'major' => 'required',
             'phone' => [
                 'required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10', 'max:15', 'ends_with:0,1,2,3,4,5,6,7,8,9',
