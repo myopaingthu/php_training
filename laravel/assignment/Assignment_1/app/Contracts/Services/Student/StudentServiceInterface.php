@@ -56,4 +56,12 @@ interface StudentServiceInterface
      * @return File Upload CSV file
      */
     public function uploadStudentCSV();
+
+    /**
+     * To send email to specified email
+     * 
+     * @param Request $request request with inputs
+     * @return bool
+     */
+    public function sendEmail(Request $request);
 }

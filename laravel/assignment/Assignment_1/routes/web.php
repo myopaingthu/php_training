@@ -26,6 +26,8 @@ Route::resource('students', StudentController::class)->except('show');
 Route::get('students/download', [StudentController::class, 'downloadStudentCSV'])->name('downloadStudentCSV');
 Route::get('students/upload', [StudentController::class, 'showStudentUploadView'])->name('students.uploadView');
 Route::post('students/upload', [StudentController::class, 'submitStudentUpload'])->name('students.upload');
+Route::get('/mail', [StudentController::class, 'showEailForm'])->name('showEailForm');
+Route::post('/mail', [StudentController::class, 'postEailFormSubmit'])->name('postEailFormSubmit');
 
 // API view routes
 Route::prefix('api')->group(function () {

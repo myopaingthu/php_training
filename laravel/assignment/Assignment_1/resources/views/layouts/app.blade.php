@@ -35,7 +35,14 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {{ request()->routeIs('students.create') ? 'active' : '' }}" aria-current="page" href="{{ route('students.create') }}">
+              <a class="nav-link {{ request()->routeIs('showEailForm') ? 'active' : '' }}" aria-current="page" 
+                href="{{ route('showEailForm') }}">
+                {{ __('Send Email') }}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{ request()->routeIs('students.create') ? 'active' : '' }}" aria-current="page" 
+                href="{{ route('students.create') }}">
                 {{ __('Create Student') }}
               </a>
             </li>

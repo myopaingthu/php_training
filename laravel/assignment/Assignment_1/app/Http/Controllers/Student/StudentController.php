@@ -158,4 +158,34 @@ class StudentController extends Controller
                 ->with('success', 'Imported successfully.');
         }
     }
+
+    /**
+     * Show the form for email to send.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showEailForm()
+    {
+        return view('student.emilForm');
+    }
+
+    /**
+     * Send email
+     * 
+     * @param \Illuminate\Http\Request $request 
+     * @return \Illuminate\Http\Response
+     */
+    public function postEailFormSubmit(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email'
+        ]);
+
+        // Check email is sent successfully or not
+        if ($this->studentInterface->sendEmail($request)) {
+            return redirect()
+                ->route('students.index')
+                ->with('success', 'Email is sent successfully.');
+        }
+    }
 }
