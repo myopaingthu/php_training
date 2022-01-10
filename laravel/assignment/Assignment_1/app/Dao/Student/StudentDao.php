@@ -38,7 +38,7 @@ class StudentDao implements StudentDaoInterface
         if ($end) {
             $students->whereDate('student.created_at', '<=', $end);
         }
-        return $students->get();
+        return $students->latest()->get();
     }
 
     /**
