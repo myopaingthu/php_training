@@ -72,6 +72,9 @@ class StudentController extends Controller
             return redirect()
                 ->route('students.index')
                 ->with('success', 'Student created successfully.');
+        } else {
+            return back()
+                ->withErrors('Something went wrong. Please try again!');
         }
     }
 
@@ -103,11 +106,14 @@ class StudentController extends Controller
     {
         $result = $this->studentInterface->updateStudent($request, $student);
 
-        // Check student is created successfully or not
+        // Check student is updated successfully or not
         if ($result) {
             return redirect()
                 ->route('students.index')
                 ->with('success', 'Student updated successfully.');
+        } else {
+            return back()
+                ->withErrors('Something went wrong. Please try again!');
         }
     }
 
@@ -138,6 +144,15 @@ class StudentController extends Controller
     }
 
     /**
+     * To download student pdf file
+     * @return File Download PDF file
+     */
+    public function downloadStudentPDF()
+    {
+        return $this->studentInterface->downloadStudentPDF();
+    }
+
+    /**
      * Show the form for uploading csv.
      *
      * @return \Illuminate\Http\Response
@@ -160,6 +175,9 @@ class StudentController extends Controller
             return redirect()
                 ->route('students.index')
                 ->with('success', 'Imported successfully.');
+        } else {
+            return back()
+                ->withErrors('Something went wrong. Please try again!');
         }
     }
 
@@ -186,6 +204,9 @@ class StudentController extends Controller
             return redirect()
                 ->route('students.index')
                 ->with('success', 'Email is sent successfully.');
+        } else {
+            return back()
+                ->withErrors('Something went wrong. Please try again!');
         }
     }
 }

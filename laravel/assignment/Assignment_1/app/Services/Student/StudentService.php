@@ -10,6 +10,7 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Mail;
+use PDF;
 
 /**
  * Service class for student.
@@ -108,6 +109,19 @@ class StudentService implements StudentServiceInterface
     public function uploadStudentCSV()
     {
         return $this->studentDao->uploadStudentCSV();
+    }
+
+    /**
+     * To download student pdf file
+     * @return File download PDF file
+     */
+    public function downloadStudentPDF()
+    {
+        $students = $this->studentDao->getStudentsAPI()->take(10);
+        $pdf = PDF::loadView('pdf.index', ['students' => $students])
+            ->setPaper('letter', 'landscape');
+
+        return $pdf->download('students.pdf');
     }
 
     /**

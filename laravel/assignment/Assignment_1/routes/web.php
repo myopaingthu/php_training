@@ -4,6 +4,7 @@ use App\Http\Controllers\Student\CustomStudentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Student\StudentAPIController;
+use App\Models\Student;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ Route::get('students/upload', [StudentController::class, 'showStudentUploadView'
 Route::post('students/upload', [StudentController::class, 'submitStudentUpload'])->name('students.upload');
 Route::get('/mail', [StudentController::class, 'showEailForm'])->name('showEailForm');
 Route::post('/mail', [StudentController::class, 'postEailFormSubmit'])->name('postEailFormSubmit');
+Route::get('students/pdfdownload', [StudentController::class, 'downloadStudentPDF'])->name('downloadStudentPDF');
 
 // API view routes
 Route::prefix('api')->group(function () {

@@ -67,6 +67,9 @@ class CustomStudentController extends Controller
             return redirect()
                 ->route('students#showList')
                 ->with('success', 'Student created successfully.');
+        } else {
+            return back()
+                ->withErrors('Something went wrong. Please try again!');
         }
     }
 
@@ -103,6 +106,9 @@ class CustomStudentController extends Controller
             return redirect()
                 ->route('students#showList')
                 ->with('success', 'Student updated successfully.');
+        } else {
+            return back()
+                ->withErrors('Something went wrong. Please try again!');
         }
     }
 

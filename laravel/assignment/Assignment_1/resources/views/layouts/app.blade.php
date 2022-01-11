@@ -31,6 +31,11 @@
           <!-- Right Side Of Navbar -->
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="{{ route('downloadStudentPDF') }}">
+                {{ __('Download PDF') }}
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" aria-current="page" href="{{ route('api#showListView') }}">
                 {{ __('API Student List') }}
               </a>

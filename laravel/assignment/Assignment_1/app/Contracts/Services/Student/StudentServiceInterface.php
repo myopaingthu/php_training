@@ -58,6 +58,12 @@ interface StudentServiceInterface
     public function uploadStudentCSV();
 
     /**
+     * To download student pdf file
+     * @return File download PDF file
+     */
+    public function downloadStudentPDF();
+
+    /**
      * To send email to specified email
      * 
      * @param Request $request request with inputs
